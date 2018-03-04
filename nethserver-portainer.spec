@@ -8,7 +8,6 @@ Release: %{release}%{?dist}
 License: GPL
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
-BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: python-kitchen
 Requires: libxml2-python
 Requires: yum-utils
