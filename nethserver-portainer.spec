@@ -50,6 +50,7 @@ rm -f %{name}-%{version}-%{release}-filelist
 rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}-%{version}-%{release}-filelist
+%config(noreplace) /etc/yum.repos.d/docker-ce.repo
 %defattr(-,root,root)
 %dir %{_nseventsdir}/%{name}-update
 %doc COPYING
