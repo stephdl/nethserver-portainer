@@ -1,0 +1,9 @@
+{
+    #Enable Docker in firewall for portainer
+    use esmith::ConfigDB;
+    my $db = esmith::ConfigDB->open;
+
+    my $DockerAction = $db->get_prop('firewall','Docker') || '';
+    $db->set_prop('firewall','Docker','enabled') if ($DockerAction ne 'enabled');
+    '';
+}

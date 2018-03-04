@@ -1,0 +1,8 @@
+#!/usr/bin/bash
+#Retrieve the portainer Image, kill and restart portainer container
+
+/usr/bin/docker container stop portainer-container
+/usr/bin/docker rm -f portainer-container
+/usr/bin/docker image pull portainer/portainer:latest
+/usr/bin/docker run -d -p 9000:9000 --restart unless-stopped --name portainer-container3 \ 
+    -v /var/lib/portainer:/data -v "/var/run/docker.sock:/var/run/docker.sock" portainer/portainer

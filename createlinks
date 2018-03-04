@@ -1,0 +1,28 @@
+#!/usr/bin/perl -w
+
+use esmith::Build::CreateLinks qw(:all);
+
+
+my $event = 'nethserver-portainer-update';
+event_actions ( $event, 'initialize-default-databases' => '00');
+
+event_actions($event, qw(
+    nethserver-portainer_creation 10
+));
+
+#expand templates following one event
+#event_templates($event, qw(
+#                /etc/httpd/conf.d/virtualhosts.conf
+#                /etc/Other/Path
+#));
+
+#restart services following one event
+event_services($event, qw(
+    docker restart
+));
+
+
+$event = 'nethserver-portainer-upgrade';
+event_actions($event, qw(
+    nethserver-portainer_upgrade 10
+    ));
