@@ -8,11 +8,6 @@ Release: %{release}%{?dist}
 License: GPL
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
-Requires: python-kitchen
-Requires: libxml2-python
-Requires: yum-utils
-Requires: pigz
-Requires: container-selinux
 Requires: docker-ce
 BuildRequires: nethserver-devtools
 BuildArch: noarch
