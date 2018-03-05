@@ -7,7 +7,7 @@ my $event = 'nethserver-portainer-update';
 event_actions ( $event, 'initialize-default-databases' => '00');
 
 event_actions($event, qw(
-    nethserver-portainer_creation 10
+    nethserver-portainer_creation 95
 ));
 
 #expand templates following one event
