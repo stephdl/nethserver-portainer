@@ -4,6 +4,6 @@
 /usr/bin/docker container stop portainer-container
 /usr/bin/docker rm -f portainer-container
 /usr/bin/docker image pull portainer/portainer:latest
-/usr/bin/docker run -d -p 9000:9000 --restart unless-stopped --name portainer-container \ 
-    -v portainer-data:/data -v "/var/run/docker.sock:/var/run/docker.sock" portainer/portainer \ 
+/usr/bin/docker run -d -p 9000:9000 --restart unless-stopped --name portainer-container \
+    -v portainer-data:/data -v "/var/run/docker.sock:/var/run/docker.sock" portainer/portainer \
     -H unix:///var/run/docker.sock
