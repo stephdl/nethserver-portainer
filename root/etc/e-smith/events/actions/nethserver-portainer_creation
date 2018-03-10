@@ -6,5 +6,5 @@ my $pid = `/usr/sbin/pidof portainer`;
 exit 0 if ($pid);
 
 #Create portainer container
-system ('/usr/bin/docker run -d -p 9000:9000 --restart unless-stopped --name portainer-container -v /var/lib/portainer:/data  -v "/var/run/docker.sock:/var/run/docker.sock" portainer/portainer -H unix:///var/run/docker.sock')
+system ('/usr/bin/docker run -d -p 9000:9000 --restart unless-stopped --name portainer-container -v portainer-data:/data  -v "/var/run/docker.sock:/var/run/docker.sock" portainer/portainer -H unix:///var/run/docker.sock')
     == 0 || die 'Cannot create portainer container';

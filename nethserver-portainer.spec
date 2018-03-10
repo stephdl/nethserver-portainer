@@ -27,14 +27,12 @@ Portainer allows you to manage your Docker containers, images, volumes, networks
 %build
 %{makedocs}
 perl createlinks
-mkdir -p root/var/lib/portainer
 
 %install
 rm -rf $RPM_BUILD_ROOT
 (cd root   ; find . -depth -print | cpio -dump $RPM_BUILD_ROOT)
 rm -f %{name}-%{version}-%{release}-filelist
 %{genfilelist} $RPM_BUILD_ROOT \
- --dir /var/lib/portainer 'attr(0660,root,docker)' \
 > %{name}-%{version}-%{release}-filelist
 
 %post
