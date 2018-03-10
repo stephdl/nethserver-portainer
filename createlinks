@@ -11,7 +11,7 @@ event_actions($event, qw(
 ));
 
 
-$event = 'nethserver-portainer-upgrade';
+$event = 'portainer-upgrade';
 event_actions($event, qw(
     nethserver-portainer_upgrade 10
     ));
