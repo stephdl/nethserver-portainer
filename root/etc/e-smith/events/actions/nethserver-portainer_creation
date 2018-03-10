@@ -1,10 +1,12 @@
-#!/usr/bin/perl
-use strict;
+#!/usr/bin/bash
 
 #search portainer PID and exist if valid
-my $pid = `/usr/sbin/pidof portainer`;
-exit 0 if ($pid);
+PID=`/usr/sbin/pidof portainer`;
+if [[ $PID -ne '' ]]; then
+    exit 0
+fi
 
 #Create portainer container
-system ('/usr/bin/docker run -d -p 9000:9000 --restart unless-stopped --name portainer-container -v portainer-data:/data  -v "/var/run/docker.sock:/var/run/docker.sock" portainer/portainer -H unix:///var/run/docker.sock')
-    == 0 || die 'Cannot create portainer container';
+/usr/bin/docker run -d -p 9000:9000 --restart unless-stopped --name portainer-container \
+    -v portainer-data:/data  -v "/var/run/docker.sock:/var/run/docker.sock" \
+    portainer/portainer -H unix:///var/run/docker.sock
