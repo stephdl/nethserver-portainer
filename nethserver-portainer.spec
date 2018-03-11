@@ -1,7 +1,7 @@
 Summary: nethserver-portainer  install portainer
 %define name nethserver-portainer
 Name: %{name}
-%define version 0.1.0
+%define version 0.1.1
 %define release 1
 Version: %{version}
 Release: %{release}%{?dist}
@@ -18,7 +18,10 @@ Portainer is meant to be as simple to deploy as it is to use. It consists of a s
 Portainer allows you to manage your Docker containers, images, volumes, networks and more ! It is compatible with the standalone Docker engine and with Docker Swarm mode.
 
 %changelog
-* Tue May 09 2017 stephane de Labrusse <stephdl@de-labrusse.fr>
+* Sun Mar 11 2018 stephane de Labrusse <stephdl@de-labrusse.fr> 0.1.1
+- Run portainer over ssl
+
+* Tue Mar 06 2018 stephane de Labrusse <stephdl@de-labrusse.fr> 0.1.0
 - initial
 
 %prep
