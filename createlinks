@@ -7,11 +7,11 @@ my $event = 'nethserver-portainer-update';
 event_actions ( $event, 'initialize-default-databases' => '00');
 
 event_actions($event, qw(
-    nethserver-portainer_creation 10
+    nethserver-portainer_container 10
 ));
 
 
 $event = 'portainer-upgrade';
 event_actions($event, qw(
-    nethserver-portainer_upgrade 10
+    nethserver-portainer_container 10
     ));
