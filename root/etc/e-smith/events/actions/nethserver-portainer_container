@@ -1,14 +1,22 @@
 #!/usr/bin/perl
 my $event = shift;
 my $pid = qx(/usr/sbin/pidof portainer);
+my $crt =  $pki{CrtFile} || "/etc/pki/tls/certs/NSRV.crt";
+my $key =  $pki{KeyFile} || "/etc/pki/tls/private/NSRV.key";
 
-if ( $event eq 'portainer-upgrade') {
-system (
+if ( $event eq 'portainer-upgrade') || ( $event eq 'certificate-update') {
+    system (
     '/usr/bin/docker container stop portainer-container;\
-    /usr/bin/docker rm -f portainer-container;\
-    /usr/bin/docker image pull portainer/portainer:latest'
-    ) == 0 || die 'cannot upgrade portainer image';
+    /usr/bin/docker rm -f portainer-container'
+    ) == 0 || die 'cannot stop portainer';
 }
+
+elsif ( $event eq 'portainer-upgrade')  {
+    system (
+        '/usr/bin/docker image pull portainer/portainer:latest'
+    )  == 0 || die 'cannot upgrade portainer image';
+}
+
 elsif ( $event eq 'nethserver-portainer-update') {
     if ($pid ne '') {
     exit 0;
@@ -19,6 +27,6 @@ elsif ( $event eq 'nethserver-portainer-update') {
 system (
     '/usr/bin/docker run -d -p 9000:9000 --restart unless-stopped --name portainer-container \
     -v portainer-data:/data -v "/var/run/docker.sock:/var/run/docker.sock" \
-    -v /etc/pki/tls/:/certs:ro portainer/portainer --ssl --sslcert "/certs/certs/NSRV.crt" \
-    --sslkey "/certs/private/NSRV.key" -H unix:///var/run/docker.sock'
+    -v /etc/pki/tls/:/certs:ro portainer/portainer --ssl --sslcert "$crt" \
+    --sslkey "$key" -H unix:///var/run/docker.sock'
     ) == 0 || die 'cannot create portainer container';

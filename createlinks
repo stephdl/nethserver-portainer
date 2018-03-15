@@ -10,8 +10,12 @@ event_actions($event, qw(
     nethserver-portainer_container 10
 ));
 
-
 $event = 'portainer-upgrade';
 event_actions($event, qw(
     nethserver-portainer_container 10
-    ));
+));
+
+$event = 'certificate-update';
+event_actions($event, qw(
+    nethserver-portainer_container 10
+));
