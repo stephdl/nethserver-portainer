@@ -1,32 +1,30 @@
-#!/usr/bin/perl
-my $event = shift;
-my $pid = qx(/usr/sbin/pidof portainer);
-my $crt =  $pki{CrtFile} || "/etc/pki/tls/certs/NSRV.crt";
-my $key =  $pki{KeyFile} || "/etc/pki/tls/private/NSRV.key";
+#!/usr/bin/bash
 
-if ( $event eq 'portainer-upgrade') || ( $event eq 'certificate-update') {
-    system (
-    '/usr/bin/docker container stop portainer-container;\
-    /usr/bin/docker rm -f portainer-container'
-    ) == 0 || die 'cannot stop portainer';
-}
+event=$1
+pid=`/usr/sbin/pidof portainer`
 
-elsif ( $event eq 'portainer-upgrade')  {
-    system (
-        '/usr/bin/docker image pull portainer/portainer:latest'
-    )  == 0 || die 'cannot upgrade portainer image';
-}
+#default pki
+crtFile=`/sbin/e-smith/config getprop pki CrtFile`
+keyFile=`/sbin/e-smith/config getprop pki KeyFile`
 
-elsif ( $event eq 'nethserver-portainer-update') {
-    if ($pid ne '') {
-    exit 0;
-    }
-}
+#default certificate value
+crt=${crtFile:-/etc/pki/tls/certs/NSRV.crt}
+key=${keyFile:-/etc/pki/tls/private/NSRV.key}
 
-#Create portainer container
-system (
-    '/usr/bin/docker run -d -p 9000:9000 --restart unless-stopped --name portainer-container \
+#substitution
+crt=${crt//'/etc/pki/tls/'/'/certs/'}
+key=${key//'/etc/pki/tls/'/'/certs/'}
+
+if [[ $pid -ne '' ]]; then
+    /usr/bin/docker container stop portainer-container || exit 1
+    /usr/bin/docker rm -f portainer-container || exit 1
+fi
+
+if [[ $event == 'portainer-upgrade' ]]; then
+    /usr/bin/docker image pull portainer/portainer:latest || exit 1
+fi
+
+/usr/bin/docker run -d -p 9000:9000 --restart unless-stopped --name portainer-container \
     -v portainer-data:/data -v "/var/run/docker.sock:/var/run/docker.sock" \
-    -v /etc/pki/tls/:/certs:ro portainer/portainer --ssl --sslcert "$crt" \
-    --sslkey "$key" -H unix:///var/run/docker.sock'
-    ) == 0 || die 'cannot create portainer container';
+    -v /etc/pki/tls/:/certs:ro portainer/portainer --ssl --sslcert "${crt}" \
+    --sslkey "${key}" -H unix:///var/run/docker.sock || exit 1
