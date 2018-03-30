@@ -3,7 +3,6 @@
 event=$1
 pid=`/usr/sbin/pidof portainer`
 
-# certificate path in container
 crt='/certs/certs/portainer.crt'
 key='/certs/private/portainer.key'
 
