@@ -37,7 +37,7 @@ class Portainer extends \Nethgui\Module\AbstractModule implements \NethServer\Mo
     {
          $host = explode(':',$_SERVER['HTTP_HOST']);
          return array(
-            'url' => "http://".$host[0].":9000",
+            'url' => "https://".$host[0].":9000",
          );
     }
 }
