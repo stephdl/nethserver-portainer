@@ -35,9 +35,13 @@ class Portainer extends \Nethgui\Module\AbstractModule implements \NethServer\Mo
 
     public function getInfo()
     {
-         $host = explode(':',$_SERVER['HTTP_HOST']);
-         return array(
-            'url' => "http://".$host[0].":9000",
-         );
+
+    $ip = $this->getPlatform()->exec('/usr/bin/sudo /usr/libexec/nethserver/ReturnDockerInterface')->getOutput();
+
+        if (isset ($ip)) {
+             return array(
+                'url' => "https://".$ip.":9000",
+             );
+        }
     }
 }

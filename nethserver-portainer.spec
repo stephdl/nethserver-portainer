@@ -1,7 +1,7 @@
 Summary: nethserver-portainer  install portainer
 %define name nethserver-portainer
 Name: %{name}
-%define version 0.1.3
+%define version 0.1.4
 %define release 1
 Version: %{version}
 Release: %{release}%{?dist}
@@ -18,8 +18,9 @@ Portainer is meant to be as simple to deploy as it is to use. It consists of a s
 Portainer allows you to manage your Docker containers, images, volumes, networks and more ! It is compatible with the standalone Docker engine and with Docker Swarm mode.
 
 %changelog
-* Fri Mar 30 2018 stephane de Labrusse <stephdl@de-labrusse.fr> 0.1.3
+* Fri Mar 30 2018 stephane de Labrusse <stephdl@de-labrusse.fr> 0.1.4
 - Specific Portainer certificate
+- Return docker interface in the dashboard
 
 * Sun Mar 18 2018 stephane de Labrusse <stephdl@de-labrusse.fr> 0.1.2
 - change the ssl certificate following certificate-update
@@ -41,7 +42,9 @@ perl createlinks
 rm -rf $RPM_BUILD_ROOT
 (cd root   ; find . -depth -print | cpio -dump $RPM_BUILD_ROOT)
 rm -f %{name}-%{version}-%{release}-filelist
-%{genfilelist} $RPM_BUILD_ROOT \
+%{genfilelist} \
+    --file  /usr/libexec/nethserver/ReturnDockerInterface 'attr(0750,root,root)' \
+$RPM_BUILD_ROOT \
 > %{name}-%{version}-%{release}-filelist
 
 %post

@@ -13,6 +13,7 @@ event_actions($event, qw(
 event_templates($event, qw (
     /etc/pki/tls/certs/portainer.crt
     /etc/pki/tls/private/portainer.key
+    /etc/sudoers
     ));
 
 $event = 'portainer-upgrade';
