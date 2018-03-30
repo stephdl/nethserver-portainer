@@ -3,17 +3,9 @@
 event=$1
 pid=`/usr/sbin/pidof portainer`
 
-#default pki
-crtFile=`/sbin/e-smith/config getprop pki CrtFile`
-keyFile=`/sbin/e-smith/config getprop pki KeyFile`
-
-#default certificate value
-crt=${crtFile:-/etc/pki/tls/certs/NSRV.crt}
-key=${keyFile:-/etc/pki/tls/private/NSRV.key}
-
-#substitution
-crt=${crt//'/etc/pki/tls/'/'/certs/'}
-key=${key//'/etc/pki/tls/'/'/certs/'}
+# certificate path in container
+crt='/certs/certs/portainer.crt'
+key='/certs/private/portainer.key'
 
 if [[ $pid -ne '' ]]; then
     /usr/bin/docker container stop portainer-container || exit 1

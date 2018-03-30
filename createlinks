@@ -10,12 +10,23 @@ event_actions($event, qw(
     nethserver-portainer_container 10
 ));
 
+event_templates($event, qw (
+    /etc/pki/tls/certs/portainer.crt
+    /etc/pki/tls/private/portainer.key
+    ));
+
 $event = 'portainer-upgrade';
 event_actions($event, qw(
     nethserver-portainer_container 10
 ));
 
+
 $event = 'certificate-update';
 event_actions($event, qw(
     nethserver-portainer_container 10
 ));
+
+event_templates($event, qw (
+    /etc/pki/tls/certs/portainer.crt
+    /etc/pki/tls/private/portainer.key
+    ));
